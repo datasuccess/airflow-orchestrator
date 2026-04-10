@@ -18,20 +18,8 @@ x-airflow-common: &airflow-common
     AIRFLOW__SCHEDULER__DAG_FILE_PROCESSOR_TIMEOUT: "180"
     AIRFLOW__CORE__PARALLELISM: "4"
     AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: "4"
-    # IoT Snowflake connection
-    SNOWFLAKE_ACCOUNT: ${SNOWFLAKE_ACCOUNT:-}
-    SNOWFLAKE_USER: ${SNOWFLAKE_USER:-}
-    SNOWFLAKE_PASSWORD: ${SNOWFLAKE_PASSWORD:-}
-    SNOWFLAKE_ROLE: ${SNOWFLAKE_ROLE:-IOT_TRANSFORMER}
-    SNOWFLAKE_WAREHOUSE: ${SNOWFLAKE_WAREHOUSE:-IOT_WH}
-    SNOWFLAKE_DATABASE: ${SNOWFLAKE_DATABASE:-IOT_PIPELINE}
-    # Banking Snowflake connection
-    BANKING_SNOWFLAKE_ACCOUNT: ${BANKING_SNOWFLAKE_ACCOUNT:-}
-    BANKING_SNOWFLAKE_USER: ${BANKING_SNOWFLAKE_USER:-}
-    BANKING_SNOWFLAKE_ROLE: ${BANKING_SNOWFLAKE_ROLE:-BANKING_PIPELINE_ROLE}
-    BANKING_SNOWFLAKE_WAREHOUSE: ${BANKING_SNOWFLAKE_WAREHOUSE:-BANKING_WH}
-    BANKING_SNOWFLAKE_DATABASE: ${BANKING_SNOWFLAKE_DATABASE:-BANKING_DV}
-    # AWS credentials
+    # AWS credentials (used for Lambda, S3, Glue, Secrets Manager)
+    # All other credentials are pulled from Secrets Manager at runtime
     AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
     AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
     AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
@@ -42,11 +30,8 @@ x-airflow-common: &airflow-common
     - ./plugins:/opt/airflow/plugins
     - ./keys:/opt/airflow/keys
     # ── Project DAG files (each project owns its DAG) ──
-    - /home/ubuntu/iot-fleet-monitor-pipeline/airflow/dags/iot_pipeline_dag.py:/opt/airflow/dags/iot_pipeline_dag.py
-    - /home/ubuntu/iot-fleet-monitor-pipeline/airflow/dags/iot_monitoring_dag.py:/opt/airflow/dags/iot_monitoring_dag.py
     - /home/ubuntu/banking-data-vault-pipeline/airflow/dags/banking_pipeline_dag.py:/opt/airflow/dags/banking_pipeline_dag.py
     # ── Project dbt mounts ──
-    - /home/ubuntu/iot-fleet-monitor-pipeline/dbt/iot_pipeline:/opt/airflow/dbt/iot_pipeline
     - /home/ubuntu/banking-data-vault-pipeline/dbt/banking_vault:/opt/airflow/dbt/banking_vault
   depends_on:
     postgres:
