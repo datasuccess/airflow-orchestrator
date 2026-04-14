@@ -3,3 +3,4 @@ boto3
 apache-airflow-providers-snowflake
 apache-airflow-providers-amazon
 astronomer-cosmos[dbt-snowflake]
+google-cloud-storage

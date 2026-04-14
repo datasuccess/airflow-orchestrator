@@ -23,6 +23,8 @@ x-airflow-common: &airflow-common
     AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
     AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
     AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+    # GCP credentials for multi-cloud GCS sync
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/gcp-key.json
   volumes:
     # Airflow core
     - ./dags:/opt/airflow/dags
@@ -31,6 +33,8 @@ x-airflow-common: &airflow-common
     - ./keys:/opt/airflow/keys
     # ── Project DAG files (each project owns its DAG) ──
     - /home/ubuntu/banking-data-vault-pipeline/airflow/dags/banking_pipeline_dag.py:/opt/airflow/dags/banking_pipeline_dag.py
+    # ── GCP service account key ──
+    - /home/ubuntu/gcp-banking-key.json:/opt/airflow/gcp-key.json:ro
     # ── Project dbt mounts ──
     - /home/ubuntu/banking-data-vault-pipeline/dbt/banking_vault:/opt/airflow/dbt/banking_vault
   depends_on:
