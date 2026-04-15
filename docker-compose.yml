@@ -34,6 +34,8 @@ x-airflow-common: &airflow-common
     # ── Project DAG files (each project owns its DAG) ──
     - /home/ubuntu/banking-data-vault-pipeline/airflow/dags/banking_pipeline_dag.py:/opt/airflow/dags/banking_pipeline_dag.py
     - /home/ubuntu/fintech-data-vault-pipeline/airflow/dags/fintech_pipeline_dag.py:/opt/airflow/dags/fintech_pipeline_dag.py
+    # ── Snowflake key-pair auth ──
+    - /home/ubuntu/snowflake_key.p8:/opt/airflow/keys/snowflake_key.p8:ro
     # ── GCP service account key ──
     - /home/ubuntu/gcp-banking-key.json:/opt/airflow/gcp-key.json:ro
     # ── Project dbt mounts ──
