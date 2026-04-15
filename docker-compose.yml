@@ -33,10 +33,12 @@ x-airflow-common: &airflow-common
     - ./keys:/opt/airflow/keys
     # ── Project DAG files (each project owns its DAG) ──
     - /home/ubuntu/banking-data-vault-pipeline/airflow/dags/banking_pipeline_dag.py:/opt/airflow/dags/banking_pipeline_dag.py
+    - /home/ubuntu/fintech-data-vault-pipeline/airflow/dags/fintech_pipeline_dag.py:/opt/airflow/dags/fintech_pipeline_dag.py
     # ── GCP service account key ──
     - /home/ubuntu/gcp-banking-key.json:/opt/airflow/gcp-key.json:ro
     # ── Project dbt mounts ──
     - /home/ubuntu/banking-data-vault-pipeline/dbt/banking_vault:/opt/airflow/dbt/banking_vault
+    - /home/ubuntu/fintech-data-vault-pipeline/dbt/fintech_vault:/opt/airflow/dbt/fintech_vault
   depends_on:
     postgres:
       condition: service_healthy
