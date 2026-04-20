@@ -34,6 +34,7 @@ x-airflow-common: &airflow-common
     # ── Project DAG files (each project owns its DAG) ──
     - /home/ubuntu/banking-data-vault-pipeline/airflow/dags/banking_pipeline_dag.py:/opt/airflow/dags/banking_pipeline_dag.py
     - /home/ubuntu/fintech-data-vault-pipeline/airflow/dags/fintech_pipeline_dag.py:/opt/airflow/dags/fintech_pipeline_dag.py
+    - /home/ubuntu/link-tracker-analysis/airflow/dags/link_tracker_dag.py:/opt/airflow/dags/link_tracker_dag.py
     # ── Snowflake key-pair auth ──
     - /home/ubuntu/snowflake_key.p8:/opt/airflow/keys/snowflake_key.p8:ro
     # ── GCP service account key ──
@@ -41,6 +42,9 @@ x-airflow-common: &airflow-common
     # ── Project dbt mounts ──
     - /home/ubuntu/banking-data-vault-pipeline/dbt/banking_vault:/opt/airflow/dbt/banking_vault
     - /home/ubuntu/fintech-data-vault-pipeline/dbt/fintech_vault:/opt/airflow/dbt/fintech_vault
+    - /home/ubuntu/link-tracker-analysis/dbt/link_tracker:/opt/airflow/dbt/link_tracker
+    # ── Project extract module mounts (Python code called from DAGs) ──
+    - /home/ubuntu/link-tracker-analysis/extract:/opt/airflow/extract/link_tracker
   depends_on:
     postgres:
       condition: service_healthy

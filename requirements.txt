@@ -4,3 +4,7 @@ apache-airflow-providers-snowflake
 apache-airflow-providers-amazon
 astronomer-cosmos[dbt-snowflake]
 google-cloud-storage
+# link-tracker extract dependencies
+psycopg2-binary
+pyarrow>=14.0
+snowflake-connector-python
